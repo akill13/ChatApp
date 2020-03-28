@@ -1,22 +1,16 @@
 import React from 'react';
 import './App.css';
-import axios from 'axios';
+import {BrowserRouter as Router } from 'react-router-dom';
+import BaseRouter from './routes';
 
-class App extends React.Component {
-  render() {
+function App() {
     return (
       <div className="App">
-          <button onClick={this.request}>Click To make Http Request</button>
+        <Router>
+          <BaseRouter />
+        </Router>
       </div>
     );
-  }
-
-  request = (event) => {
-    axios.get('http://127.0.0.1:8080/api/test')
-      .then(resp => {
-        console.log(resp);
-      })
-  }
 }
 
 export default App;
