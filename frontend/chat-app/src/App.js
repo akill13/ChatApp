@@ -1,15 +1,16 @@
 import React from 'react';
-import './App.css';
 import {BrowserRouter as Router } from 'react-router-dom';
 import BaseRouter from './routes';
+import {UserProvider} from './UserContext';
+
 
 function App() {
     return (
-      <div className="App">
+      <UserProvider>
         <Router>
           <BaseRouter />
         </Router>
-      </div>
+      </UserProvider>
     );
 }
 
