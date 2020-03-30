@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {UserContext} from '../UserContext';
+import Socket from './Socket';
 
 const Form = (props) => {
     const [user, setUser] = useContext(UserContext);
@@ -22,7 +23,7 @@ const Form = (props) => {
     }
 
     return (
-        <div>
+        <>
             <div>
                 <div>
                     <label><b>Name</b></label>
@@ -35,7 +36,8 @@ const Form = (props) => {
                     <button onClick={() => handleSubmit()}>Login/SignUp</button>
                 </div>
             </div>
-        </div>
+            <Socket/>
+        </>
     );
 }
 
