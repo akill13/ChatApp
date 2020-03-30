@@ -3,81 +3,34 @@ import SockJsClient from 'react-stomp';
 import axios from 'axios';
 
 class Socket extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ws: null
-        };
-    }
 
-    componentDidMount() {
-        this.connect();
-    }
-
-    connect = () => {
-        var ws = new WebSocket('ws://127.0.0.1:8080/chat/websocket');
-        this.setState({
-            ws: ws
-        });
-        ws.onopen = () => {
-            console.log('connected');
-            ws.send('test');
-        };
-
-        ws.onclose = e => {
-            console.log(e);
-            this.connect();
-        };
-
-        ws.onmessage = event => {
-            const message = JSON.parse(event.data);
-            console.log(event);
-            console.log(message);
-        }
-    }
-
-    sendMessage = () => {
-        try{
-            console.log('I am happening');
-            const msg = Object.create({messageId: null, message: 'omg plz work', user: null});
-            console.log(this.state.ws);
-            this.state.ws.send(JSON.stringify(msg));
+    sendMessage = (msg) => {
+        try {
+            msg = {'messageId':'10', "message":"test"};
+            console.log(JSON.stringify(msg));
+            this.clientRef.sendMessage("/app/chat.send", JSON.stringify(msg));
         } catch(error) {
-            console.error(error);
+            return false;
         }
-    } 
+    }
 
-    // sendMessage = (msg) => {
-    //     console.log(this.clientRef);
-    //     try {
-    //         msg = Object.create({
-    //             messageId: null,
-    //             message: 'omg plz work',
-    //             user: null
-    //         });
-    //         this.clientRef.sendMessage("/app/chat.send", msg);
-    //     } catch(error) {
-    //         return false;
-    //     }
-    // }
+    messageRecieve = (msg, topics) => {
+        console.log(msg);
+        console.log(topics);
+    }
 
-    /**
-     * componentDidUpdate() {
-     *   axios.get('http://127.0.0.1:8080/app/test').then(resp => console.log(resp)).catch(e => console.error(e));
-     *   }
-     */
+    test = () => {
+        axios.get('http://127.0.0.1:8080/test').then(resp => console.log(resp));
+    }
 
     render() {
         return (
             <>
-            <button onClick={this.sendMessage}>test</button>
+                <SockJsClient url={'http://127.0.0.1:8080/chat'} topics={["/topics/public"]}
+                onMessage={this.messageRecieve}
+                ref={(client)=>{this.clientRef=client}}
+                debug={false}/>
             </>
-            // <>
-            // <SockJsClient url={'http://127.0.0.1:8080/chat'} topics={["/topics/public"]}
-            // onMessage={(msg)=>{console.log(msg)}}
-            // ref={(client)=>{this.clientRef=client}}/>
-            // <button onClick={this.sendMessage}>test</button>
-            // </>
         );
     }
 }
