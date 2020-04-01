@@ -1,19 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import SockJsClient from 'react-stomp';
-import axios from 'axios';
 import Chat from './Chat';
 
 const Socket = () => {
     const [clientRef, setClientRef] = useState(null);
     const [prevMessages, setPrevMessages] = useState([])
 
-    // useEffect( () => {
-    //     getHistory();
-    // });
-
     const sendMessage = (msg) => {
         try {
-            msg = {'messageId':'10', "message":"test"};
             clientRef.sendMessage("/app/chat.send", JSON.stringify(msg));
             return true;
         } catch(error) {
@@ -23,12 +17,6 @@ const Socket = () => {
 
     const messageRecieve = (msg, topics) => {
         setPrevMessages(prevMessages.concat(msg));
-    }
-
-    const getHistory = () => {
-        axios.get('http://127.0.0.1:8080/history').then(resp => {
-            
-        })
     }
 
     return (

@@ -1,5 +1,7 @@
 package com.abdulhalimi.chat.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class Message {
 
     private String message;
 
+    @CreationTimestamp
     @Temporal(TemporalType.DATE)
     private Date date;
 

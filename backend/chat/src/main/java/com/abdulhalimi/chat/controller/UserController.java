@@ -4,7 +4,7 @@ import com.abdulhalimi.chat.model.User;
 import com.abdulhalimi.chat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import javax.validation.Valid;
 
 @RestController
@@ -22,5 +22,10 @@ public class UserController {
     @GetMapping("")
     public User getUser(@Valid @RequestBody User user) {
         return userService.getUser(user);
+    }
+
+    @GetMapping("/all")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

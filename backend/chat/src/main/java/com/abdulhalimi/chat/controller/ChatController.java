@@ -20,8 +20,7 @@ public class ChatController {
     @MessageMapping("/chat.send")
     @SendTo("/topics/public")
     public Message sendMessage(@Payload Message message) {
-        System.out.println("i am happening");
-        return message;
+        return messageService.saveMessage(message);
     }
 
     @MessageMapping("/chat.newUser")
