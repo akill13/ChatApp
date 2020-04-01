@@ -21,5 +21,5 @@ In application.resources spring.datasource.username and spring.datasource.passwo
 If you would like to chat with yourself you must use two separate web browsers! (e.g., Safari and Chrome) The reason is because the logged in user is saved to localStorage and this persists betweeen tabs. So login with different users on different web browers to see the chatting in action!
 
 ## Public 
-Below is a link to the app being hosted on heroku! (please be patient with it as it most likely got loaded off of memory)
+Below is a link to the app being hosted on heroku!
 <a>https://pumpkin-shortcake-84161.herokuapp.com</a>
