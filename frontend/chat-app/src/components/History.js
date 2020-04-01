@@ -27,13 +27,24 @@ const History = (props) => {
     }
 
     return(
-        <>
-        {messages.map(msg => <div key={msg.messageId}>{users.find(e => e.id === msg.user.id)?.name + ": " + msg.message + " " + msg.date}</div>)}
-        <select onChange={handleChange}>
-            {users.map(usr => <option key={usr.id} value={usr.id}>{usr.name}</option>)}
-        </select>
-        <button onClick={setUser}>Set User</button>
-        </>
+        <div className='row'>
+            <div className='col'>
+                {messages.map(msg => {
+                    return <p key={msg.messageId}>{users.find(e => e.id === msg.user.id)?.name + ": " + msg.message + " " + msg.date}</p>
+                })}
+            </div>
+            <div className='col'>
+                <div className='form-group'>
+                <label>Select a User whose messages will all be deleted at 12AM (UTC)</label>
+                    <div className='col-sm-4'>
+                        <select className='form-control' onChange={handleChange}>
+                            {users.map(usr => <option key={usr.id} value={usr.id}>{usr.name}</option>)}
+                        </select>
+                    </div>
+                    <button className='col-sm-4' onClick={setUser}>Set User</button>
+                </div>
+            </div>
+        </div>
     );
 }
 

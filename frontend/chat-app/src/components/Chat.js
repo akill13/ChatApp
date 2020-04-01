@@ -10,9 +10,18 @@ const Chat = (props) => {
     user = user ? user : savedUser;
 
     return !user ? (<Redirect to='/'/>) : (
-        <div>
+        <div className='col-sm-3 col-sm-offset-4'>
             <span>Hello, {user.name}</span>
-            <div>{props.messages.map((msg) => <MessageList key={msg.messageId} message={msg.message}/>)}</div>
+            <ul></ul>
+            <div className='media-body ml-3'>{props.messages.map((msg) => {
+                let className = 'text-';
+                let show = false;
+                if(user.id === msg.user.id) {
+                    className+='right';
+                 } else {className+='left'; show=true;}
+                return <MessageList key={msg.messageId} className={className} message={msg} show={show}/>
+            })}
+            </div>
             <ChatWindow user={user} sendMessage={props.sendMessage}/>
         </div> 
     );

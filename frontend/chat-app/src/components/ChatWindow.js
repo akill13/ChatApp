@@ -12,14 +12,10 @@ const ChatWindow = (props) => {
     }
 
     return (
-        <div className="col-sm-3 col-sm-offset-4 frame">
-            <div>
-                <div className="msj-rta macro">                        
-                    <div className="text text-r" style={{background: 'whitesmoke !important'}}>
-                        <input className="mytext" value={message} onChange={e=> setMessage(e.target.value)} placeholder="Type a message"/>
-                        <button onClick={saveMessage}>Send</button>
-                    </div> 
-                </div>         
+        <div className="input-group mb-3">
+            <input className="form-control" value={message} onChange={e=> setMessage(e.target.value)} placeholder="Type a message"/>
+            <div className='input-group-append'>
+                <button className='btn btn-outline-secondary' type='button' onClick={saveMessage}>Send</button>
             </div>
         </div>       
     );
