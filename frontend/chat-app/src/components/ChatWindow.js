@@ -1,7 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 const ChatWindow = (props) => {
+    const inputRef = useRef(null);
     const [message, setMessage] = useState('');
+
+    useEffect(()=> {
+        inputRef.current.focus()
+    },[])
     const saveMessage = () => {
         const msg = {"message":message, "user":props.user};
         if(props.sendMessage(msg)){
@@ -13,7 +18,7 @@ const ChatWindow = (props) => {
 
     return (
         <div className="input-group mb-3">
-            <input className="form-control" value={message} onChange={e=> setMessage(e.target.value)} placeholder="Type a message"/>
+            <input ref={inputRef} className="form-control" value={message} onChange={e=> setMessage(e.target.value)} placeholder="Type a message"/>
             <div className='input-group-append'>
                 <button className='btn btn-outline-secondary' type='button' onClick={saveMessage}>Send</button>
             </div>

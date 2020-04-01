@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useRef, useEffect} from 'react';
 import axios from 'axios';
 import {UserContext} from '../UserContext';
 
@@ -6,6 +6,11 @@ const Form = (props) => {
     const [user, setUser] = useContext(UserContext);
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
+    const inputRef = useRef(null);
+
+    useEffect(()=>{
+        inputRef.current.focus()
+    },[])
 
     const handleSubmit = () => {
         axios.post(`http://127.0.0.1:8080/api/user`, {
@@ -26,7 +31,7 @@ const Form = (props) => {
             <div className='container'>
                 <div className='form-group'>
                     <label><b>Name</b></label>
-                    <input type="text" className='form-control' value={name} onChange={e => setName(e.target.value)} placeholder="John Doe" required/>
+                    <input type="text" className='form-control' ref={inputRef} value={name} onChange={e => setName(e.target.value)} placeholder="John Doe" required/>
                     <small className="form-text text-muted">You can't change name or username after! Choose wisely</small>
                 </div>
                 <div className='form-group'>

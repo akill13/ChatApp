@@ -5,6 +5,7 @@ const History = (props) => {
     const [messages, setMessage] = useState([]);
     const [users, setUsers] = useState([]);
     const [selectUserId, setSelectedUserId] = useState();
+    const [success, setSuccess] = useState(false);
     useEffect(()=>{
         axios.get('http://127.0.0.1:8080/history').then(resp => {
             setMessage(resp.data);
@@ -15,15 +16,27 @@ const History = (props) => {
     },[])
 
     const setUser = () => {
-        const user = {"id":selectUserId}
-        axios.post('http://127.0.0.1:8080/api/select', {
-            user: user
-        }).then(resp => console.log(resp))
-          .catch(error => console.error(error));
+        if (selectUserId) {
+            const user = {"id":selectUserId}
+            axios.post('http://127.0.0.1:8080/api/select', {
+                user: user
+            }).then(resp => updateResp())
+            .catch(error => console.error(error));
+        }
+    }
+    
+    const updateResp = () => {
+        setSuccess(true);
     }
 
     const handleChange = (e) => {
         setSelectedUserId(e.target.value);
+    }
+
+    const showSuccess = () => {
+        if (success) {
+            return <p>Done!</p>
+        }
     }
 
     return(
@@ -37,12 +50,13 @@ const History = (props) => {
                 <div className='form-group'>
                 <label>Select a User whose messages will all be deleted at 12AM (UTC)</label>
                     <div className='col-sm-4'>
-                        <select className='form-control' onChange={handleChange}>
+                        <select disabled={users.length<1} className='form-control' onChange={handleChange}>
                             {users.map(usr => <option key={usr.id} value={usr.id}>{usr.name}</option>)}
                         </select>
                     </div>
-                    <button className='col-sm-4' onClick={setUser}>Set User</button>
+                    <button className='col-sm-4' disabled={users.length<1} onClick={setUser}>Set User</button>
                 </div>
+                {showSuccess()}
             </div>
         </div>
     );
